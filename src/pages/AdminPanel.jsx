@@ -1,1 +1,360 @@
-<!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width <= 720px){.main-content{margin-top:4rem}}#challenge-error-text{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iI0IyMEYwMyIgZD0iTTE2IDNhMTMgMTMgMCAxIDAgMTMgMTNBMTMuMDE1IDEzLjAxNSAwIDAgMCAxNiAzbTAgMjRhMTEgMTEgMCAxIDEgMTEtMTEgMTEuMDEgMTEuMDEgMCAwIDEtMTEgMTEiLz48cGF0aCBmaWxsPSIjQjIwRjAzIiBkPSJNMTcuMDM4IDE4LjYxNUgxNC44N0wxNC41NjMgOS41aDIuNzgzem0tMS4wODQgMS40MjdxLjY2IDAgMS4wNTcuMzg4LjQwNy4zODkuNDA3Ljk5NCAwIC41OTYtLjQwNy45ODQtLjM5Ny4zOS0xLjA1Ny4zODktLjY1IDAtMS4wNTYtLjM4OS0uMzk4LS4zODktLjM5OC0uOTg0IDAtLjU5Ny4zOTgtLjk4NS40MDYtLjM5NyAxLjA1Ni0uMzk3Ii8+PC9zdmc+");background-repeat:no-repeat;background-size:contain;padding-left:34px}</style><meta http-equiv="refresh" content="360"></head><body><div class="main-wrapper" role="main"><div class="main-content"><noscript><div class="h2"><span id="challenge-error-text">Enable JavaScript and cookies to continue</span></div></noscript></div></div><script>(function(){window._cf_chl_opt = {cvId: '3',cZone: 'claude.ai',cType: 'managed',cRay: '9de51b7c58f7d606',cH: '5shrx3W8zdPAkRemULjoMLajkOYI5py2xHPtk0P6RZo-1773846030-1.2.1.1-7LXNuS_5dQlQgAgopPQ4Dh47c2J_SOwwvIKOvyDAVf38DOUWHBYsnxNdMcILUKTB',cUPMDTk:"\/api\/files\/output\/AdminPanel.jsx?__cf_chl_tk=NawPhlQvJdqQWfNSxL6Rm_4nOH1kCtz15nnE8uoqkwY-1773846030-1.0.1.1-gZD0MAECo8dwdwp5gAGHOOEhVHdndHIPmIwEQ0i87fw",cFPWv: 'b',cITimeS: '1773846030',cTplC:0,cTplO:0,cTplV:5,cTplB: '0',fa:"\/api\/files\/output\/AdminPanel.jsx?__cf_chl_f_tk=NawPhlQvJdqQWfNSxL6Rm_4nOH1kCtz15nnE8uoqkwY-1773846030-1.0.1.1-gZD0MAECo8dwdwp5gAGHOOEhVHdndHIPmIwEQ0i87fw",md: 'hlZe1rZuf0z5RgO_1dlbM6b4FNhNi.9YbILrcaVIQGM-1773846030-1.2.1.1-SY4FH183a0rMz09GSANg6bYL23kFX6pXj2taMHKIwReED2.JbbEOE3z.dU1PqdoyQJURIiPkt82.ydHunC01Mi9EP3TXX1u53YJE0dXC4EhlfntT9r1joqgxyM5r.Ae0P1B6vIMgqRZJF5YzEhv4YVGSFJjv0kx53Pd1quUDZin5iulXmApU04b7Drf2DToL5A1jbFA9W7gabfqfBAVkVfpGDHnqg5e134SVUgjULcjYU__R7p9QQIjwH5WS1HmPhYIT2u1VnPF9_RXLZMupxFP7sEscWZYskdGrcaT_LI.jV_F4FQBrEHS6onq_69J97uIF7_SkX4.WgJVA_XreQ6sE5T4nDFdrJsmzzi0ItX4amBlut9gIDYizmOUrXZ6yzMEVWGNK3b1cpbGch.htr6zALSH9_b40aYrhTacZpB.tV8BKrSflNiBUoVylV4CmAqblnd0XPoloom37ivtbdt_2kvLsH1XnnpVv15_YUl09sKZide0TvYvB5SBMmdjt8lzTMXBWcbCPlwkRv4kWJfqr9mhLD4UR54Qx_dwf6QGMeNK.2LiqPC5GTVwi2477dcoutDmY7rTmSBpmEWtOy5dy62Pap5WCetAJMNUvTlGXk0kLZk9R04mzM6dBi.qA8cN5S7I1iRxMMmVPb_A3UQTphSPca9z49rDtN6_ieI4RCR7k_ap4y2tCVMPc6q3wkIrvmjL3xa__Atnd0zuyl.TM69CSpxjCzU2HmO0DY7czHqjmtE0D2tA1NKPQHAeQl7kgGvJSuepbbbeFUHNrhRzpa3qikj8cbvqNar3c2G.c27gFrY748CDHpvGOOIUa0l9gU0Fk95hCHMAsfGE.7W30QFe.bpeWCzcb00qvEVWSRHAs7_7WKbKAcGIjr92l7saOIYE.n3JX.ulmt8Zl_1cvzDVz7pi8S.gRafYT_ALOrGp0gu1Vs37raS2qHgMQF0CxLnfS0f3.dH_I6293fNlNvvs1sOu.ML9tjGGB8HlSDTHWl79bPz9chpXMawX8',mdrd: 'uTKKNggn0FIk54NH6Y2CMgRzn27fRPkcqAnJNWmxOVY-1773846030-1.2.1.1-OulYR8T8fTCrxJQqQPlR5E938dzChSfOcA8mBw.0v2_Aj0731akhUhKhKujKSE7XWCZ9yaX9AUCVAwOo65Bv.aRv_8H1Iqy6l5v5dHDg6CMIEXxcwJcwu1QPuHxuH5ydqvF0zstWHBSFuRHobEgaG1syP0Yr5D7SeIOWk644awhnKBDpUDlBN14kgHutpGNXQIo31DGuuwaHIB.MlfLPswTDP7XdTCI_JiNg.B6XFCJJ.QOLnqayF3njMv0sn44Pc0o1z6HOK_6LAuQLK.KQqtnSxWTMa.iErB0CPhZgO2P.uH6.FgOKsS0ugrdVroQliGvFz1EhUXAH8AjHkXS0gN1BrzZTzJjx97_aKUwIbi6JCSZXUoMAZczndUebvTUqgBeIqcofYx0Odlb_yxlrdKetlg8sI7URI6lvWAZAmzey9CVHBSIRYNdOP.s_ixl73VYhoc2n8Ngs6BW53FhgNohreR6xwufCxFuWJUOmJleTIvr68s5MnskX2sBq5yS4LHfAj_mjq_qG9dzUBqf.nrh.Wl8_BoEQm0O8._qh1NtZtwM663icC5qsFXwU1lbMZj2DOakP1Ykz3nql1pQLpz5g2MxM7NXac.5jyGDvjI9Ndhgz4bTmgA2qJ37uW5YCevj.UtS_DvmOXDdUIhPBCMDwKV4j2hxvvjv8WPBA5Ekl9WPPiK5EC.37Qk8zjJ70_.TfjHTPXg463us4RA.N9YEN4BYlqtZnrYLMDnnDZMobnLjFVS_F0JS_slCO1byakJUH4VD8GiidefURdY_Btjx40RERiZPrFeVSy_GJlJuGNX3YjJknPr8JofTcz6u1JlysSfUjGpwn2ozIJrv4Ix3p7BVlrJrcIUWvkLVAm7n3gdFN9j2GyQpQxA46s1WhnkK9vg0rtR2feFRg0_veWRlNLoW0fr4oesxxG.qfsgZSZr28b276iE7Plvu8kgbEYweY.vApQnFfXZPKatU92.ImFKot2kp27f862EvfOscJa88i9yDk48fWYw_mOeO6WLNpZKAlSxuUdQ64PT4d36GaTn4oExDDDQfkwBtD0S74om4GcU8hMHLgMsJutXY5id5VMPDctUndGxtUvmuYihR_LmLlFzPBnVSf5GJ2P3cy3L_vfJXod3r.v6j91D6smHXWqJ2ZxCHj4KDjxuGcXRUiTURn1im.SDZvuL0PC7Gvqe1oFQWqKjbqoQQetQlt8un6hoOAtSlyMblRC60rBfIcrFKNa1wU9AV67zFmI13nXKms2It5AfDakuq2wTUQ1lKw_Cile6rIEqamjyYWVeFnPP9rfkU3oGq5guMQVn79XrDEE01FWo1w2G_TEWO5Cd2lmp0XY1nTAjS0a72klB1wOXQj5v3P8EWEnKJQ8fZAYdEzfdIoNnd3HxTlRSXmXggxJ.43pYqGfgmuyit5.Dvvs7k7e59qJ5XZYQs10aaGsZOE1XwIpLWSjH31600lsQzYgZt9Df1PBZU7mRZi7dpIIsiMbTgr6L5NikaczUKpuaBlDVNQ6YsbR0We4ifEAKvXNFUOL21lhttAoZLDMoBhDSWSeOn95rU.oOyEniVesTpnxsfV.SNfO_QrJS7XCD4btzmvMdbr564VbXonqiU8tRi6EV3JlNeaZStea3A5GpIz67sJBO17BxuLk.TxDNMXzYQGw.tU2rE3HQV6Dwh9ZSEXXxL__zz4a0tjhcOYNo3PUuaEWT0dYkBqv7QRg1BwxzL5MV8cQy3Xq.Z_IAkCIOpGnbeDtk066bK8mSnCVz762FQGHX8Ln8BDkhZtw1EMQkLnvFPyE9jTTDhuJB6wEZVXNuYkhmhGNSz4JTrpujJ31OwLYZwJl37PNszi74.qQb3je0PYMDHVX.CbouPGSUUu4_9GELjrX2RITMR2CjC_4QAQN9VxFo9QBHsfkw.ER2HxAQ9nWHt2meWH70s7VEvO.qGcQXtp1GddlbK5gOF8n.t2_OS_QGDzkSVR0WckQv8ZQIYCzabNaAXq3_.QJtmlY_CsGjtRHBXmW6t1LtTHTeyChsa2q6u4F8KjsNaZzeGtNuFEh47SFtVx0iPb_k4IUMEY9q8S3V9e4adLUz4XMxFVPc4MY1rCV_iHGT6rP3SbcZioMDbpuOzllPkeTb3OFtdViWcTmAhErn3zHMUeqECqHMemdchDJk_JiGbYAC5IYUdkr1rk346O2ote2IIco46i5ps2rKdZIqmU0rc_xCWI3oIN3jEcP7EjiPG7utFVnIpgmOFXSHuS2Xo35g6y5EvBla0nTHgwqmqjC8Vc1HvVWuRuCn4eybDVltGxckbVkLfOTFJZCNwSjKkKtUmMKXRZxsFhsIGx5zCgwYkBnZPXIDRBib6kpcZf6YZgnIGC_OAqKDd.AW5wDibWmWqrYhlaQ6U2j2mlmvtS8sWUuqVw0wDGaaE_.fW4KOoyz0nzieEbjFMbcz9AxwXLjOPoIw2LJMI5TNqgHFkeFwPdRI7OWxeHVKMUmAjrSK8lnwPlcqw5ebc3DtdxYA',};var a = document.createElement('script');a.src = '/cdn-cgi/challenge-platform/h/b/orchestrate/chl_page/v1?ray=9de51b7c58f7d606';window._cf_chl_opt.cOgUHash = location.hash === '' && location.href.indexOf('#') !== -1 ? '#' : location.hash;window._cf_chl_opt.cOgUQuery = location.search === '' && location.href.slice(0, location.href.length - window._cf_chl_opt.cOgUHash.length).indexOf('?') !== -1 ? '?' : location.search;if (window.history && window.history.replaceState) {var ogU = location.pathname + window._cf_chl_opt.cOgUQuery + window._cf_chl_opt.cOgUHash;history.replaceState(null, null,"\/api\/files\/output\/AdminPanel.jsx?__cf_chl_rt_tk=NawPhlQvJdqQWfNSxL6Rm_4nOH1kCtz15nnE8uoqkwY-1773846030-1.0.1.1-gZD0MAECo8dwdwp5gAGHOOEhVHdndHIPmIwEQ0i87fw"+ window._cf_chl_opt.cOgUHash);a.onload = function() {history.replaceState(null, null, ogU);}}document.getElementsByTagName('head')[0].appendChild(a);}());</script></body></html>
+import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { Leaf, LogOut, Download, Search, Users, DollarSign, Clock, CheckCircle, XCircle, X, ChevronDown, Building2, AlertTriangle } from "lucide-react";
+import axios from "axios";
+import { QUESTIONS } from "../data/questions";
+
+const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+
+function authHeader() {
+  return { Authorization: `Bearer ${localStorage.getItem("admin_token")}` };
+}
+
+function StatusBadge({ status }) {
+  const styles = {
+    paid: { background: "#E8EFE6", color: "#2C4032", label: "Ödendi" },
+    failed: { background: "#FEE2E2", color: "#991B1B", label: "Başarısız" },
+    pending: { background: "#FEF3C7", color: "#92400E", label: "Beklemede" },
+    havale_bekliyor: { background: "#DBEAFE", color: "#1E40AF", label: "Havale Bekliyor" },
+  };
+  const s = styles[status] || styles.pending;
+  return (
+    <span
+      className="text-xs font-bold px-2.5 py-1 rounded-full"
+      style={{ background: s.background, color: s.color }}
+    >
+      {s.label}
+    </span>
+  );
+}
+
+function StatCard({ icon: Icon, label, value, color }) {
+  return (
+    <div className="flex-1 min-w-0 p-4 rounded-2xl bg-white shadow-sm border border-gray-50">
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: color + "20" }}>
+          <Icon size={16} style={{ color }} />
+        </div>
+        <span className="text-xs font-medium text-gray-500">{label}</span>
+      </div>
+      <p className="text-xl font-bold text-gray-900">{value}</p>
+    </div>
+  );
+}
+
+function SubmissionModal({ sub, onClose, onRefresh }) {
+  const qMap = Object.fromEntries(QUESTIONS.map((q) => [String(q.id), q.text]));
+  const answers = sub.answers || {};
+  const categories = [...new Set(QUESTIONS.map((q) => q.category))];
+  const [actionLoading, setActionLoading] = useState(false);
+
+  const handleHavaleAction = async (action) => {
+    if (!window.confirm(action === "approve" ? "Havaleyi onaylamak istediğinize emin misiniz?" : "Havaleyi reddetmek istediğinize emin misiniz?")) return;
+    setActionLoading(true);
+    try {
+      await axios.post(`${API}/admin/${action === "approve" ? "approve-havale" : "reject-havale"}/${sub.id}`, {}, { headers: authHeader() });
+      if (onRefresh) onRefresh();
+      onClose();
+    } catch (err) {
+      alert("İşlem başarısız: " + (err.response?.data?.detail || err.message));
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-end justify-center"
+      style={{ background: "rgba(0,0,0,0.4)", maxWidth: "none" }}
+      onClick={onClose}
+    >
+      <div
+        className="w-full bg-white rounded-t-3xl max-h-[85vh] overflow-y-auto pb-8 fade-in-up"
+        style={{ maxWidth: 480 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="sticky top-0 bg-white px-5 pt-5 pb-3 border-b border-gray-100">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-bold text-gray-900">{sub.full_name}</h3>
+              <p className="text-xs text-gray-500">{sub.email} · {sub.phone}</p>
+            </div>
+            <button onClick={onClose} className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "#F0F7F2" }}>
+              <X size={16} style={{ color: "#749F82" }} />
+            </button>
+          </div>
+          <div className="mt-2 flex items-center justify-between">
+            <StatusBadge status={sub.payment_status} />
+            <span className="text-xs text-gray-400">{new Date(sub.created_at).toLocaleDateString("tr-TR")}</span>
+          </div>
+        </div>
+        <div className="px-5 pt-4 space-y-6">
+          {/* Havale Bilgileri */}
+          {sub.havale_info && (
+            <div className="p-4 rounded-2xl border-2" style={{ borderColor: "#DBEAFE", background: "#EFF6FF" }}>
+              <div className="flex items-center gap-2 mb-3">
+                <Building2 size={16} style={{ color: "#1E40AF" }} />
+                <p className="text-sm font-bold" style={{ color: "#1E40AF" }}>Havale Bildirimi</p>
+              </div>
+              <div className="space-y-2 text-xs">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Gönderen:</span>
+                  <span className="font-semibold text-gray-900">{sub.havale_info.sender_name}</span>
+                </div>
+                {sub.havale_info.sender_phone && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Telefon:</span>
+                    <span className="font-semibold text-gray-900">{sub.havale_info.sender_phone}</span>
+                  </div>
+                )}
+                {sub.havale_info.sender_email && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">E-posta:</span>
+                    <span className="font-semibold text-gray-900">{sub.havale_info.sender_email}</span>
+                  </div>
+                )}
+                {sub.havale_info.note && (
+                  <div>
+                    <span className="text-gray-500">Not:</span>
+                    <p className="font-medium text-gray-800 mt-0.5">{sub.havale_info.note}</p>
+                  </div>
+                )}
+                {sub.havale_info.notified_at && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">Bildirim Tarihi:</span>
+                    <span className="text-gray-700">{new Date(sub.havale_info.notified_at).toLocaleString("tr-TR")}</span>
+                  </div>
+                )}
+              </div>
+
+              {sub.payment_status === "havale_bekliyor" && (
+                <div className="flex gap-2 mt-4">
+                  <button
+                    onClick={() => handleHavaleAction("approve")}
+                    disabled={actionLoading}
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-white transition-colors"
+                    style={{ background: actionLoading ? "#9CA3AF" : "#16A34A" }}
+                  >
+                    <CheckCircle size={14} />
+                    Onayla
+                  </button>
+                  <button
+                    onClick={() => handleHavaleAction("reject")}
+                    disabled={actionLoading}
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-white transition-colors"
+                    style={{ background: actionLoading ? "#9CA3AF" : "#DC2626" }}
+                  >
+                    <XCircle size={14} />
+                    Reddet
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Ödeme Yöntemi */}
+          {sub.payment_method && (
+            <div className="flex items-center gap-2 text-xs text-gray-500">
+              <span>Ödeme Yöntemi:</span>
+              <span className="font-semibold text-gray-700">
+                {sub.payment_method === "havale" ? "Havale/EFT" : "PayTR (Kredi Kartı)"}
+              </span>
+            </div>
+          )}
+
+          {categories.map((cat) => {
+            const catQs = QUESTIONS.filter((q) => q.category === cat);
+            const answered = catQs.filter((q) => answers[q.id]);
+            if (!answered.length) return null;
+            return (
+              <div key={cat}>
+                <p className="text-sm font-bold mb-2" style={{ color: "#749F82" }}>{cat}</p>
+                <div className="space-y-2">
+                  {answered.map((q) => (
+                    <div key={q.id} className="p-3 rounded-2xl" style={{ background: "#F9FAF9" }}>
+                      <p className="text-xs text-gray-500 mb-0.5">{q.text}</p>
+                      <p className="text-sm font-medium text-gray-900">{answers[q.id]}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function AdminPanel() {
+  const navigate = useNavigate();
+  const [submissions, setSubmissions] = useState([]);
+  const [stats, setStats] = useState({});
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("all");
+  const [selected, setSelected] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const [subRes, statRes] = await Promise.all([
+        axios.get(`${API}/admin/submissions`, { headers: authHeader() }),
+        axios.get(`${API}/admin/stats`, { headers: authHeader() }),
+      ]);
+      setSubmissions(subRes.data.items || (Array.isArray(subRes.data) ? subRes.data : []));
+      setStats(statRes.data);
+    } catch {
+      localStorage.removeItem("admin_token");
+      navigate("/admin/giris");
+    } finally {
+      setLoading(false);
+    }
+  }, [navigate]);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("admin_token");
+    localStorage.removeItem("admin_user");
+    navigate("/admin/giris");
+  };
+
+  const handleExport = async () => {
+    try {
+      const res = await axios.get(`${API}/admin/export`, {
+        headers: authHeader(), responseType: "blob",
+      });
+      const url = URL.createObjectURL(res.data);
+      const a = document.createElement("a");
+      a.href = url; a.download = "basvurular.csv"; a.click();
+      URL.revokeObjectURL(url);
+    } catch { alert("Dışa aktarma başarısız"); }
+  };
+
+  const filtered = submissions.filter((s) => {
+    const matchSearch =
+      s.full_name?.toLowerCase().includes(search.toLowerCase()) ||
+      s.email?.toLowerCase().includes(search.toLowerCase()) ||
+      s.phone?.includes(search);
+    const matchFilter = filter === "all" || s.payment_status === filter;
+    return matchSearch && matchFilter;
+  });
+
+  return (
+    <div className="app-container" style={{ minHeight: "100dvh", background: "#F9FAF9" }}>
+      {/* Header */}
+      <div className="px-5 pt-5 pb-4 bg-white border-b border-gray-100 sticky top-0 z-10">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: "#749F82" }}>
+              <Leaf size={16} className="text-white" />
+            </div>
+            <h1 className="text-lg font-bold text-gray-900">Admin Paneli</h1>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              data-testid="export-csv-btn"
+              onClick={handleExport}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-colors"
+              style={{ background: "#E8EFE6", color: "#2C4032" }}
+            >
+              <Download size={13} />
+              CSV
+            </button>
+            <button
+              data-testid="admin-logout-btn"
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-100 transition-colors"
+            >
+              <LogOut size={13} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="flex items-center justify-center h-40">
+          <div className="flex gap-1.5">
+            <span className="dot" /><span className="dot" /><span className="dot" />
+          </div>
+        </div>
+      ) : (
+        <div className="px-5 py-4 space-y-4">
+          {/* Stats */}
+          <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5 fade-in">
+            <StatCard icon={Users} label="Toplam" value={stats.total || 0} color="#749F82" />
+            <StatCard icon={CheckCircle} label="Ödendi" value={stats.paid || 0} color="#749F82" />
+            <StatCard icon={Building2} label="Havale" value={stats.havale_bekliyor || 0} color="#2563EB" />
+            <StatCard icon={Clock} label="Bekliyor" value={stats.pending || 0} color="#DDA15E" />
+            <StatCard icon={XCircle} label="Başarısız" value={stats.failed || 0} color="#DC2626" />
+            <StatCard icon={DollarSign} label="Gelir" value={`₺${(stats.revenue || 0).toLocaleString("tr-TR")}`} color="#749F82" />
+          </div>
+
+          {/* Search + Filter */}
+          <div className="space-y-2 fade-in-up">
+            <div className="relative">
+              <Search size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                data-testid="admin-search-input"
+                type="text"
+                className="survey-input pl-11"
+                placeholder="Ad, e-posta veya telefon ara..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <div className="flex gap-2">
+              {[["all", "Tümü"], ["paid", "Ödendi"], ["havale_bekliyor", "Havale"], ["pending", "Beklemede"], ["failed", "Başarısız"]].map(([val, label]) => (
+                <button
+                  key={val}
+                  data-testid={`filter-${val}`}
+                  onClick={() => setFilter(val)}
+                  className="px-3 py-1.5 rounded-full text-xs font-semibold transition-colors"
+                  style={{
+                    background: filter === val ? "#749F82" : "#E8EFE6",
+                    color: filter === val ? "#fff" : "#2C4032",
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Submissions List */}
+          <div className="space-y-2 fade-in-up stagger-1">
+            <p className="text-xs text-gray-500 font-medium">{filtered.length} başvuru</p>
+            {filtered.length === 0 ? (
+              <div className="text-center py-10 text-gray-400 text-sm">Başvuru bulunamadı</div>
+            ) : (
+              filtered.map((sub) => (
+                <button
+                  key={sub.id}
+                  data-testid={`submission-${sub.id}`}
+                  onClick={() => setSelected(sub)}
+                  className="w-full text-left p-4 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-green-200 transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="text-sm font-bold text-gray-900 truncate">{sub.full_name}</p>
+                      <p className="text-xs text-gray-500 truncate">{sub.email}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">{sub.phone}</p>
+                    </div>
+                    <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
+                      <StatusBadge status={sub.payment_status} />
+                      <p className="text-xs text-gray-400">
+                        {new Date(sub.created_at).toLocaleDateString("tr-TR")}
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+
+      {selected && <SubmissionModal sub={selected} onClose={() => setSelected(null)} onRefresh={fetchData} />}
+    </div>
+  );
+}
