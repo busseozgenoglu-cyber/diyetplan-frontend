@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowLeft, Lock, CheckCircle, Building2,
-  Copy, Check, Send, User, Phone, MessageSquare
+  Copy, Check, Send, User, Phone, MessageSquare, CreditCard
 } from "lucide-react";
 import axios from "axios";
 
@@ -17,12 +17,14 @@ const HAVALE_INFO = {
 export default function PaymentScreen() {
   const navigate = useNavigate();
 
-  const [step, setStep] = useState("havale");
+  const [step, setStep] = useState("secim"); // secim | havale | havale_form | havale_success | paytr | error
   const [error, setError] = useState("");
   const [submissionId, setSubmissionId] = useState(() => sessionStorage.getItem("submission_id") || null);
   const [copiedField, setCopiedField] = useState(null);
   const [havaleForm, setHavaleForm] = useState({ sender_name: "", sender_phone: "", note: "" });
   const [havaleLoading, setHavaleLoading] = useState(false);
+  const [paytrToken, setPaytrToken] = useState(null);
+  const [paytrLoading, setPaytrLoading] = useState(false);
 
   const contact = (() => {
     try { return JSON.parse(sessionStorage.getItem("contact_info") || "{}"); } catch { return {}; }
@@ -63,7 +65,6 @@ export default function PaymentScreen() {
         setCopiedField(field);
         setTimeout(() => setCopiedField(null), 2000);
       }).catch(() => {
-        // Fallback
         const ta = document.createElement("textarea");
         ta.value = cleanText;
         document.body.appendChild(ta);
@@ -86,20 +87,38 @@ export default function PaymentScreen() {
         submission_id: subId,
         sender_name: havaleForm.sender_name,
         sender_phone: havaleForm.sender_phone || "",
-        sender_email: contact.email || "",
         note: havaleForm.note || "",
       });
       setStep("havale_success");
     } catch (err) {
       console.error("Havale notify error:", err);
-      const msg = err.response?.data?.detail
-        || err.response?.data?.message
-        || err.message
-        || "Bildirim gönderilemedi. Lütfen tekrar deneyin.";
+      const msg = err.response?.data?.detail || err.message || "Bildirim gönderilemedi.";
       setError(msg);
       setStep("error");
     } finally {
       setHavaleLoading(false);
+    }
+  };
+
+  const handlePayTR = async () => {
+    setPaytrLoading(true);
+    setError("");
+    try {
+      const subId = await ensureSubmission();
+      const userIp = "1.2.3.4";
+      const res = await axios.post(`${API}/payments/paytr-token`, {
+        submission_id: subId,
+        user_ip: userIp,
+      });
+      setPaytrToken(res.data.token);
+      setStep("paytr");
+    } catch (err) {
+      console.error("PayTR error:", err);
+      const msg = err.response?.data?.detail || err.message || "Ödeme başlatılamadı.";
+      setError(msg);
+      setStep("error");
+    } finally {
+      setPaytrLoading(false);
     }
   };
 
@@ -108,15 +127,16 @@ export default function PaymentScreen() {
       {/* Header */}
       <div className="px-5 pt-5 pb-4 flex items-center gap-3 flex-shrink-0">
         <button
-          data-testid="payment-back-btn"
           onClick={() => {
-            if (step === "havale") navigate("/iletisim");
+            if (step === "secim") navigate("/iletisim");
+            else if (step === "havale") setStep("secim");
             else if (step === "havale_form") setStep("havale");
-            else if (step === "error") setStep("havale");
+            else if (step === "paytr") setStep("secim");
+            else if (step === "error") setStep("secim");
           }}
           style={{
             background: "#F0F7F2",
-            visibility: ["havale", "havale_form", "error"].includes(step) ? "visible" : "hidden"
+            visibility: ["secim", "havale", "havale_form", "paytr", "error"].includes(step) ? "visible" : "hidden"
           }}
           className="w-9 h-9 rounded-full flex items-center justify-center"
         >
@@ -133,8 +153,8 @@ export default function PaymentScreen() {
 
       <div className="flex-1 overflow-y-auto">
 
-        {/* ===== HAVALE DETAILS ===== */}
-        {step === "havale" && (
+        {/* ===== ÖDEME SEÇİMİ ===== */}
+        {step === "secim" && (
           <div className="px-5 pb-8 space-y-4 fade-in-up">
             <div className="p-4 rounded-3xl" style={{ background: "#F0F7F2" }}>
               <div className="flex justify-between items-center">
@@ -153,66 +173,49 @@ export default function PaymentScreen() {
               )}
             </div>
 
-            <div className="p-4 rounded-3xl" style={{ background: "#FEF3C7" }}>
-              <div className="flex items-center gap-2 mb-2">
-                <Building2 size={18} style={{ color: "#D97706" }} />
-                <p className="text-sm font-bold text-gray-900">Havale / EFT Bilgileri</p>
+            <p className="text-sm font-semibold text-gray-700 text-center">Ödeme yöntemini seçin</p>
+
+            {/* Kredi Kartı */}
+            <button
+              onClick={handlePayTR}
+              disabled={paytrLoading}
+              className="w-full p-4 rounded-3xl border-2 text-left transition-all"
+              style={{ borderColor: "#749F82", background: "#F0F7F2" }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ background: "#749F82" }}>
+                  <CreditCard size={20} color="white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-bold text-gray-900">Kredi / Banka Kartı</p>
+                  <p className="text-xs text-gray-500">PayTR güvencesiyle anında ödeme</p>
+                </div>
+                {paytrLoading ? (
+                  <div className="flex gap-1">
+                    <span className="dot" /><span className="dot" /><span className="dot" />
+                  </div>
+                ) : (
+                  <span className="text-xs font-bold px-2 py-1 rounded-full" style={{ background: "#E8EFE6", color: "#2C4032" }}>Önerilen</span>
+                )}
               </div>
-              <p className="text-xs text-gray-600 mb-3">
-                Aşağıdaki hesaba <strong>₺249,99</strong> tutarında havale/EFT yapınız.
-              </p>
+            </button>
 
-              <div className="space-y-3">
-                <div className="bg-white rounded-2xl p-3">
-                  <p className="text-xs text-gray-500 mb-1">Banka</p>
-                  <p className="text-sm font-bold text-gray-900">{HAVALE_INFO.bank}</p>
+            {/* Havale */}
+            <button
+              onClick={() => setStep("havale")}
+              className="w-full p-4 rounded-3xl border-2 text-left transition-all"
+              style={{ borderColor: "#E5E7EB", background: "#FAFAFA" }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ background: "#FEF3C7" }}>
+                  <Building2 size={20} style={{ color: "#D97706" }} />
                 </div>
-
-                <div className="bg-white rounded-2xl p-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-gray-500 mb-1">IBAN</p>
-                      <p className="text-sm font-bold text-gray-900 font-mono">{HAVALE_INFO.iban}</p>
-                    </div>
-                    <button
-                      onClick={() => copyToClipboard(HAVALE_INFO.iban, "iban")}
-                      className="ml-2 w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors"
-                      style={{ background: copiedField === "iban" ? "#E8EFE6" : "#F3F4F6" }}
-                    >
-                      {copiedField === "iban" ? <Check size={15} style={{ color: "#749F82" }} /> : <Copy size={15} className="text-gray-500" />}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-2xl p-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-xs text-gray-500 mb-1">Alıcı Adı</p>
-                      <p className="text-sm font-bold text-gray-900">{HAVALE_INFO.name}</p>
-                    </div>
-                    <button
-                      onClick={() => copyToClipboard(HAVALE_INFO.name, "name")}
-                      className="ml-2 w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors"
-                      style={{ background: copiedField === "name" ? "#E8EFE6" : "#F3F4F6" }}
-                    >
-                      {copiedField === "name" ? <Check size={15} style={{ color: "#749F82" }} /> : <Copy size={15} className="text-gray-500" />}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-2xl p-3">
-                  <p className="text-xs text-gray-500 mb-1">Tutar</p>
-                  <p className="text-lg font-bold" style={{ color: "#749F82" }}>₺249,99</p>
+                <div>
+                  <p className="text-sm font-bold text-gray-900">Havale / EFT</p>
+                  <p className="text-xs text-gray-500">Banka havalesi ile ödeme</p>
                 </div>
               </div>
-            </div>
-
-            <div className="p-3 rounded-2xl border border-amber-200" style={{ background: "#FFFBEB" }}>
-              <p className="text-xs text-amber-800 leading-relaxed">
-                <strong>Önemli:</strong> Havale/EFT yaptıktan sonra aşağıdaki butona tıklayarak bildirim gönderiniz.
-                Ödemeniz kontrol edildikten sonra diyet planınız hazırlanacaktır.
-              </p>
-            </div>
+            </button>
 
             <div className="space-y-2">
               {["Kişiye özel beslenme planı", "3 gün içinde e-posta ile teslim", "Uzman diyetisyen onaylı"].map((f, i) => (
@@ -222,14 +225,93 @@ export default function PaymentScreen() {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* ===== PAYTR IFRAME ===== */}
+        {step === "paytr" && paytrToken && (
+          <div className="px-5 pb-8 fade-in-up">
+            <div className="p-3 rounded-2xl mb-4" style={{ background: "#F0F7F2" }}>
+              <p className="text-xs text-gray-600 text-center">Güvenli ödeme sayfası — PayTR altyapısı</p>
+            </div>
+            <iframe
+              src={`https://www.paytr.com/odeme/guvenli/${paytrToken}`}
+              id="paytriframe"
+              frameBorder="0"
+              scrolling="no"
+              style={{ width: "100%", height: "600px", borderRadius: "16px" }}
+              title="PayTR Ödeme"
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.addEventListener('message', function(e) {
+                    if(e.data === 'paytr-payment-success') {
+                      window.location.href = '/basari';
+                    }
+                  });
+                `
+              }}
+            />
+          </div>
+        )}
+
+        {/* ===== HAVALE DETAILS ===== */}
+        {step === "havale" && (
+          <div className="px-5 pb-8 space-y-4 fade-in-up">
+            <div className="p-4 rounded-3xl" style={{ background: "#FEF3C7" }}>
+              <div className="flex items-center gap-2 mb-2">
+                <Building2 size={18} style={{ color: "#D97706" }} />
+                <p className="text-sm font-bold text-gray-900">Havale / EFT Bilgileri</p>
+              </div>
+              <p className="text-xs text-gray-600 mb-3">
+                Aşağıdaki hesaba <strong>₺249,99</strong> tutarında havale/EFT yapınız.
+              </p>
+              <div className="space-y-3">
+                <div className="bg-white rounded-2xl p-3">
+                  <p className="text-xs text-gray-500 mb-1">Banka</p>
+                  <p className="text-sm font-bold text-gray-900">{HAVALE_INFO.bank}</p>
+                </div>
+                <div className="bg-white rounded-2xl p-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-gray-500 mb-1">IBAN</p>
+                      <p className="text-sm font-bold text-gray-900 font-mono">{HAVALE_INFO.iban}</p>
+                    </div>
+                    <button
+                      onClick={() => copyToClipboard(HAVALE_INFO.iban, "iban")}
+                      className="ml-2 w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: copiedField === "iban" ? "#E8EFE6" : "#F3F4F6" }}
+                    >
+                      {copiedField === "iban" ? <Check size={15} style={{ color: "#749F82" }} /> : <Copy size={15} className="text-gray-500" />}
+                    </button>
+                  </div>
+                </div>
+                <div className="bg-white rounded-2xl p-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1">Alıcı Adı</p>
+                      <p className="text-sm font-bold text-gray-900">{HAVALE_INFO.name}</p>
+                    </div>
+                    <button
+                      onClick={() => copyToClipboard(HAVALE_INFO.name, "name")}
+                      className="ml-2 w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: copiedField === "name" ? "#E8EFE6" : "#F3F4F6" }}
+                    >
+                      {copiedField === "name" ? <Check size={15} style={{ color: "#749F82" }} /> : <Copy size={15} className="text-gray-500" />}
+                    </button>
+                  </div>
+                </div>
+                <div className="bg-white rounded-2xl p-3">
+                  <p className="text-xs text-gray-500 mb-1">Tutar</p>
+                  <p className="text-lg font-bold" style={{ color: "#749F82" }}>₺249,99</p>
+                </div>
+              </div>
+            </div>
 
             <button
               onClick={() => {
-                setHavaleForm({
-                  sender_name: contact.full_name || "",
-                  sender_phone: contact.phone || "",
-                  note: ""
-                });
+                setHavaleForm({ sender_name: contact.full_name || "", sender_phone: contact.phone || "", note: "" });
                 setStep("havale_form");
               }}
               className="btn-brand"
@@ -247,7 +329,6 @@ export default function PaymentScreen() {
               <p className="text-sm font-bold text-gray-900 mb-1">Havale Bildirimi</p>
               <p className="text-xs text-gray-500">Havale bilgilerinizi girin, ödemenizi en kısa sürede onaylayalım.</p>
             </div>
-
             <div className="space-y-3">
               <div>
                 <label className="text-xs font-semibold text-gray-600 mb-1.5 flex items-center gap-1.5">
@@ -261,7 +342,6 @@ export default function PaymentScreen() {
                   onChange={(e) => setHavaleForm(prev => ({ ...prev, sender_name: e.target.value }))}
                 />
               </div>
-
               <div>
                 <label className="text-xs font-semibold text-gray-600 mb-1.5 flex items-center gap-1.5">
                   <Phone size={13} /> Telefon
@@ -274,7 +354,6 @@ export default function PaymentScreen() {
                   onChange={(e) => setHavaleForm(prev => ({ ...prev, sender_phone: e.target.value }))}
                 />
               </div>
-
               <div>
                 <label className="text-xs font-semibold text-gray-600 mb-1.5 flex items-center gap-1.5">
                   <MessageSquare size={13} /> Not (opsiyonel)
@@ -289,7 +368,6 @@ export default function PaymentScreen() {
                 />
               </div>
             </div>
-
             <button
               onClick={handleHavaleNotify}
               disabled={!havaleForm.sender_name.trim() || havaleLoading}
@@ -301,19 +379,8 @@ export default function PaymentScreen() {
                   <span className="dot" /><span className="dot" /><span className="dot" />
                 </div>
               ) : (
-                <>
-                  <Send size={16} />
-                  Bildirimi Gönder
-                </>
+                <><Send size={16} />Bildirimi Gönder</>
               )}
-            </button>
-
-            <button
-              onClick={() => setStep("havale")}
-              className="w-full text-center text-sm font-semibold py-2"
-              style={{ color: "#749F82" }}
-            >
-              ← Havale Bilgilerine Dön
             </button>
           </div>
         )}
@@ -321,35 +388,15 @@ export default function PaymentScreen() {
         {/* ===== SUCCESS ===== */}
         {step === "havale_success" && (
           <div className="px-5 py-12 text-center fade-in-up">
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5"
-              style={{ background: "#E8EFE6" }}
-            >
+            <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5" style={{ background: "#E8EFE6" }}>
               <CheckCircle size={40} style={{ color: "#749F82" }} />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Bildiriminiz Alındı!</h3>
-            <p className="text-sm text-gray-500 mb-2 leading-relaxed">
-              Havale bildiriminiz başarıyla iletildi.
-            </p>
             <p className="text-sm text-gray-500 mb-8 leading-relaxed">
               Ödemeniz kontrol edildikten sonra kişiye özel diyet planınız{" "}
               <strong className="text-gray-700">3 gün içinde</strong> e-posta adresinize gönderilecektir.
             </p>
-
-            <div className="p-4 rounded-2xl text-left mb-6" style={{ background: "#F0F7F2" }}>
-              <p className="text-xs font-semibold text-gray-600 mb-2">Bildirim Özeti</p>
-              <div className="space-y-1 text-xs text-gray-500">
-                <p>Gönderen: <span className="font-semibold text-gray-700">{havaleForm.sender_name}</span></p>
-                {havaleForm.sender_phone && <p>Telefon: <span className="font-semibold text-gray-700">{havaleForm.sender_phone}</span></p>}
-                {contact.email && <p>E-posta: <span className="font-semibold text-gray-700">{contact.email}</span></p>}
-                {havaleForm.note && <p>Not: <span className="text-gray-700">{havaleForm.note}</span></p>}
-              </div>
-            </div>
-
-            <button
-              onClick={() => { sessionStorage.clear(); navigate("/"); }}
-              className="btn-brand"
-            >
+            <button onClick={() => { sessionStorage.clear(); navigate("/"); }} className="btn-brand">
               Ana Sayfaya Dön
             </button>
           </div>
@@ -358,19 +405,12 @@ export default function PaymentScreen() {
         {/* ===== ERROR ===== */}
         {step === "error" && (
           <div className="px-5 py-12 text-center fade-in">
-            <div
-              className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-              style={{ background: "#FEE2E2" }}
-            >
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "#FEE2E2" }}>
               <span className="text-3xl">!</span>
             </div>
             <h3 className="text-lg font-bold text-gray-900 mb-2">Bir Hata Oluştu</h3>
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">{error}</p>
-            <button
-              onClick={() => { setStep("havale"); setError(""); }}
-              className="btn-brand mx-auto"
-              style={{ maxWidth: 280 }}
-            >
+            <button onClick={() => { setStep("secim"); setError(""); }} className="btn-brand mx-auto" style={{ maxWidth: 280 }}>
               Tekrar Dene
             </button>
           </div>
