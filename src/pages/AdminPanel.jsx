@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Leaf, LogOut, Download, Search, Users, DollarSign, Clock, CheckCircle, XCircle, X, ChevronDown, Building2, AlertTriangle } from "lucide-react";
+import { Leaf, LogOut, Download, Search, Users, DollarSign, Clock, CheckCircle, XCircle, X, Building2, CreditCard, Send, Package } from "lucide-react";
 import axios from "axios";
 import { QUESTIONS } from "../data/questions";
 
@@ -13,16 +13,15 @@ function authHeader() {
 function StatusBadge({ status }) {
   const styles = {
     paid: { background: "#E8EFE6", color: "#2C4032", label: "Ödendi" },
+    paytr_paid: { background: "#E8EFE6", color: "#2C4032", label: "PayTR Ödendi" },
     failed: { background: "#FEE2E2", color: "#991B1B", label: "Başarısız" },
     pending: { background: "#FEF3C7", color: "#92400E", label: "Beklemede" },
     havale_bekliyor: { background: "#DBEAFE", color: "#1E40AF", label: "Havale Bekliyor" },
+    shipped: { background: "#F3E8FF", color: "#6B21A8", label: "Gönderildi" },
   };
   const s = styles[status] || styles.pending;
   return (
-    <span
-      className="text-xs font-bold px-2.5 py-1 rounded-full"
-      style={{ background: s.background, color: s.color }}
-    >
+    <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: s.background, color: s.color }}>
       {s.label}
     </span>
   );
@@ -48,11 +47,11 @@ function SubmissionModal({ sub, onClose, onRefresh }) {
   const categories = [...new Set(QUESTIONS.map((q) => q.category))];
   const [actionLoading, setActionLoading] = useState(false);
 
-  const handleHavaleAction = async (action) => {
-    if (!window.confirm(action === "approve" ? "Havaleyi onaylamak istediğinize emin misiniz?" : "Havaleyi reddetmek istediğinize emin misiniz?")) return;
+  const handleAction = async (endpoint, confirmMsg) => {
+    if (!window.confirm(confirmMsg)) return;
     setActionLoading(true);
     try {
-      await axios.post(`${API}/admin/${action === "approve" ? "approve-havale" : "reject-havale"}/${sub.id}`, {}, { headers: authHeader() });
+      await axios.post(`${API}/admin/${endpoint}/${sub.id}`, {}, { headers: authHeader() });
       if (onRefresh) onRefresh();
       onClose();
     } catch (err) {
@@ -62,17 +61,15 @@ function SubmissionModal({ sub, onClose, onRefresh }) {
     }
   };
 
+  const isHavalePending = sub.status === "havale_bekliyor";
+  const isPaid = sub.status === "paid" || sub.status === "paytr_paid";
+  const isShipped = sub.status === "shipped";
+
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-end justify-center"
-      style={{ background: "rgba(0,0,0,0.4)", maxWidth: "none" }}
-      onClick={onClose}
-    >
-      <div
-        className="w-full bg-white rounded-t-3xl max-h-[85vh] overflow-y-auto pb-8 fade-in-up"
-        style={{ maxWidth: 480 }}
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: "rgba(0,0,0,0.4)", maxWidth: "none" }} onClick={onClose}>
+      <div className="w-full bg-white rounded-t-3xl max-h-[85vh] overflow-y-auto pb-8 fade-in-up" style={{ maxWidth: 480 }} onClick={(e) => e.stopPropagation()}>
+        
+        {/* Header */}
         <div className="sticky top-0 bg-white px-5 pt-5 pb-3 border-b border-gray-100">
           <div className="flex items-center justify-between">
             <div>
@@ -88,92 +85,79 @@ function SubmissionModal({ sub, onClose, onRefresh }) {
             <span className="text-xs text-gray-400">{new Date(sub.created_at).toLocaleDateString("tr-TR")}</span>
           </div>
         </div>
-        <div className="px-5 pt-4 space-y-6">
-          {/* Havale Bilgileri */}
-          {sub.havale_info && (
-            <div className="p-4 rounded-2xl border-2" style={{ borderColor: "#DBEAFE", background: "#EFF6FF" }}>
-              <div className="flex items-center gap-2 mb-3">
-                <Building2 size={16} style={{ color: "#1E40AF" }} />
-                <p className="text-sm font-bold" style={{ color: "#1E40AF" }}>Havale Bildirimi</p>
-              </div>
-              <div className="space-y-2 text-xs">
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Gönderen:</span>
-                  <span className="font-semibold text-gray-900">{sub.havale_info.sender_name}</span>
-                </div>
-                {sub.havale_info.sender_phone && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Telefon:</span>
-                    <span className="font-semibold text-gray-900">{sub.havale_info.sender_phone}</span>
-                  </div>
-                )}
-                {sub.havale_info.sender_email && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">E-posta:</span>
-                    <span className="font-semibold text-gray-900">{sub.havale_info.sender_email}</span>
-                  </div>
-                )}
-                {sub.havale_info.note && (
-                  <div>
-                    <span className="text-gray-500">Not:</span>
-                    <p className="font-medium text-gray-800 mt-0.5">{sub.havale_info.note}</p>
-                  </div>
-                )}
-                {sub.havale_info.notified_at && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Bildirim Tarihi:</span>
-                    <span className="text-gray-700">{new Date(sub.havale_info.notified_at).toLocaleString("tr-TR")}</span>
-                  </div>
-                )}
-              </div>
 
-              {sub.status === "havale_bekliyor" && (
-                <div className="flex gap-2 mt-4">
-                  <button
-                    onClick={() => handleHavaleAction("approve")}
-                    disabled={actionLoading}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-white transition-colors"
-                    style={{ background: actionLoading ? "#9CA3AF" : "#16A34A" }}
-                  >
-                    <CheckCircle size={14} />
-                    Onayla
-                  </button>
-                  <button
-                    onClick={() => handleHavaleAction("reject")}
-                    disabled={actionLoading}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-white transition-colors"
-                    style={{ background: actionLoading ? "#9CA3AF" : "#DC2626" }}
-                  >
-                    <XCircle size={14} />
-                    Reddet
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
+        <div className="px-5 pt-4 space-y-4">
 
           {/* Ödeme Yöntemi */}
           {sub.payment_method && (
-            <div className="flex items-center gap-2 text-xs text-gray-500">
-              <span>Ödeme Yöntemi:</span>
-              <span className="font-semibold text-gray-700">
-                {sub.payment_method === "havale" ? "Havale/EFT" : "PayTR (Kredi Kartı)"}
-              </span>
+            <div className="flex items-center gap-2 p-3 rounded-xl" style={{ background: "#F9FAF9" }}>
+              {sub.payment_method === "paytr" ? <CreditCard size={14} style={{ color: "#749F82" }} /> : <Building2 size={14} style={{ color: "#1E40AF" }} />}
+              <span className="text-xs text-gray-600">{sub.payment_method === "paytr" ? "PayTR (Kredi Kartı)" : "Havale/EFT"}</span>
             </div>
           )}
 
+          {/* Havale Bilgileri */}
+          {isHavalePending && (
+            <div className="p-4 rounded-2xl border-2" style={{ borderColor: "#DBEAFE", background: "#EFF6FF" }}>
+              <p className="text-sm font-bold mb-2" style={{ color: "#1E40AF" }}>Havale Bildirimi</p>
+              {sub.havale_sender_name && <p className="text-xs text-gray-600">Gönderen: <strong>{sub.havale_sender_name}</strong></p>}
+              {sub.havale_sender_phone && <p className="text-xs text-gray-600">Tel: {sub.havale_sender_phone}</p>}
+              {sub.havale_note && <p className="text-xs text-gray-600">Not: {sub.havale_note}</p>}
+              
+              {/* Havale Onay/Red Butonları */}
+              <div className="flex gap-2 mt-3">
+                <button
+                  onClick={() => handleAction("approve-havale", "Havaleyi onaylamak istediğinize emin misiniz?")}
+                  disabled={actionLoading}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-white"
+                  style={{ background: "#749F82" }}
+                >
+                  <CheckCircle size={13} /> Havaleyi Onayla
+                </button>
+                <button
+                  onClick={() => handleAction("reject-havale", "Havaleyi reddetmek istediğinize emin misiniz?")}
+                  disabled={actionLoading}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-white"
+                  style={{ background: "#DC2626" }}
+                >
+                  <XCircle size={13} /> Reddet
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Sipariş Gönderildi Butonu */}
+          {isPaid && !isShipped && (
+            <button
+              onClick={() => handleAction("mark-shipped", "Siparişi gönderildi olarak işaretlemek istediğinize emin misiniz?")}
+              disabled={actionLoading}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold text-white"
+              style={{ background: "#7C3AED" }}
+            >
+              <Send size={15} /> Sipariş Gönderildi Olarak İşaretle
+            </button>
+          )}
+
+          {isShipped && (
+            <div className="flex items-center gap-2 p-3 rounded-xl" style={{ background: "#F3E8FF" }}>
+              <Package size={14} style={{ color: "#6B21A8" }} />
+              <span className="text-xs font-bold" style={{ color: "#6B21A8" }}>Diyet planı gönderildi ✓</span>
+            </div>
+          )}
+
+          {/* Sorular & Cevaplar */}
           {categories.map((cat) => {
             const catQs = QUESTIONS.filter((q) => q.category === cat);
-            const answered = catQs.filter((q) => answers[q.id]);
+            const answered = catQs.filter((q) => answers[q.id] || answers[String(q.id)]);
             if (!answered.length) return null;
             return (
               <div key={cat}>
-                <p className="text-sm font-bold mb-2" style={{ color: "#749F82" }}>{cat}</p>
+                <p className="text-xs font-bold text-gray-500 uppercase mb-2">{cat}</p>
                 <div className="space-y-2">
                   {answered.map((q) => (
-                    <div key={q.id} className="p-3 rounded-2xl" style={{ background: "#F9FAF9" }}>
-                      <p className="text-xs text-gray-500 mb-0.5">{q.text}</p>
-                      <p className="text-sm font-medium text-gray-900">{answers[q.id]}</p>
+                    <div key={q.id} className="p-3 rounded-xl" style={{ background: "#F9FAF9" }}>
+                      <p className="text-xs text-gray-500">{q.text}</p>
+                      <p className="text-sm font-medium text-gray-900 mt-0.5">{answers[q.id] || answers[String(q.id)]}</p>
                     </div>
                   ))}
                 </div>
@@ -215,18 +199,22 @@ export default function AdminPanel() {
 
   const handleLogout = () => {
     localStorage.removeItem("admin_token");
-    localStorage.removeItem("admin_user");
     navigate("/admin/giris");
   };
 
   const handleExport = async () => {
     try {
-      const res = await axios.get(`${API}/admin/export`, {
+      const params = new URLSearchParams();
+      if (filter !== "all") params.append("status", filter);
+      if (search) params.append("search", search);
+      const res = await axios.get(`${API}/admin/export?${params}`, {
         headers: authHeader(), responseType: "blob",
       });
       const url = URL.createObjectURL(res.data);
       const a = document.createElement("a");
-      a.href = url; a.download = "basvurular.csv"; a.click();
+      a.href = url;
+      a.download = `basvurular${filter !== "all" ? "_" + filter : ""}.csv`;
+      a.click();
       URL.revokeObjectURL(url);
     } catch { alert("Dışa aktarma başarısız"); }
   };
@@ -239,6 +227,16 @@ export default function AdminPanel() {
     const matchFilter = filter === "all" || s.status === filter;
     return matchSearch && matchFilter;
   });
+
+  const filters = [
+    ["all", "Tümü"],
+    ["paid", "Ödendi"],
+    ["paytr_paid", "PayTR"],
+    ["havale_bekliyor", "Havale"],
+    ["shipped", "Gönderildi"],
+    ["pending", "Beklemede"],
+    ["failed", "Başarısız"],
+  ];
 
   return (
     <div className="app-container" style={{ minHeight: "100dvh", background: "#F9FAF9" }}>
@@ -253,19 +251,14 @@ export default function AdminPanel() {
           </div>
           <div className="flex items-center gap-2">
             <button
-              data-testid="export-csv-btn"
               onClick={handleExport}
               className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-colors"
               style={{ background: "#E8EFE6", color: "#2C4032" }}
             >
               <Download size={13} />
-              CSV
+              {filter !== "all" ? `CSV (${filters.find(f => f[0] === filter)?.[1]})` : "CSV"}
             </button>
-            <button
-              data-testid="admin-logout-btn"
-              onClick={handleLogout}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-100 transition-colors"
-            >
+            <button onClick={handleLogout} className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-100 transition-colors">
               <LogOut size={13} />
             </button>
           </div>
@@ -274,9 +267,7 @@ export default function AdminPanel() {
 
       {loading ? (
         <div className="flex items-center justify-center h-40">
-          <div className="flex gap-1.5">
-            <span className="dot" /><span className="dot" /><span className="dot" />
-          </div>
+          <div className="flex gap-1.5"><span className="dot" /><span className="dot" /><span className="dot" /></div>
         </div>
       ) : (
         <div className="px-5 py-4 space-y-4">
@@ -285,8 +276,8 @@ export default function AdminPanel() {
             <StatCard icon={Users} label="Toplam" value={stats.total || 0} color="#749F82" />
             <StatCard icon={CheckCircle} label="Ödendi" value={stats.paid || 0} color="#749F82" />
             <StatCard icon={Building2} label="Havale" value={stats.havale_bekliyor || 0} color="#2563EB" />
+            <StatCard icon={Package} label="Gönderildi" value={stats.shipped || 0} color="#7C3AED" />
             <StatCard icon={Clock} label="Bekliyor" value={stats.pending || 0} color="#DDA15E" />
-            <StatCard icon={XCircle} label="Başarısız" value={stats.failed || 0} color="#DC2626" />
             <StatCard icon={DollarSign} label="Gelir" value={`₺${(stats.revenue || 0).toLocaleString("tr-TR")}`} color="#749F82" />
           </div>
 
@@ -295,7 +286,6 @@ export default function AdminPanel() {
             <div className="relative">
               <Search size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
-                data-testid="admin-search-input"
                 type="text"
                 className="survey-input pl-11"
                 placeholder="Ad, e-posta veya telefon ara..."
@@ -303,13 +293,12 @@ export default function AdminPanel() {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            <div className="flex gap-2">
-              {[["all", "Tümü"], ["paid", "Ödendi"], ["havale_bekliyor", "Havale"], ["pending", "Beklemede"], ["failed", "Başarısız"]].map(([val, label]) => (
+            <div className="flex gap-2 overflow-x-auto pb-1">
+              {filters.map(([val, label]) => (
                 <button
                   key={val}
-                  data-testid={`filter-${val}`}
                   onClick={() => setFilter(val)}
-                  className="px-3 py-1.5 rounded-full text-xs font-semibold transition-colors"
+                  className="px-3 py-1.5 rounded-full text-xs font-semibold transition-colors whitespace-nowrap"
                   style={{
                     background: filter === val ? "#749F82" : "#E8EFE6",
                     color: filter === val ? "#fff" : "#2C4032",
@@ -330,7 +319,6 @@ export default function AdminPanel() {
               filtered.map((sub) => (
                 <button
                   key={sub.id}
-                  data-testid={`submission-${sub.id}`}
                   onClick={() => setSelected(sub)}
                   className="w-full text-left p-4 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-green-200 transition-colors"
                 >
