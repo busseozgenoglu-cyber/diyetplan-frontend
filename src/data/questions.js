@@ -429,10 +429,7 @@ export const QUESTIONS = [
       "Motivasyon mesajları ve hatırlatmalar",
     ],
   },
-];
-
-export const TOTAL_QUESTIONS = QUESTIONS.length; // 60
-  {
+{
     id: 1, category: "Kişisel Bilgiler", icon: "👤",
     text: "Adınız ve soyadınız nedir?",
     type: "text", placeholder: "Adınız Soyadınız",
@@ -460,3 +457,6 @@ export const TOTAL_QUESTIONS = QUESTIONS.length; // 60
   },
 
   // ── Fiziksel Bilgiler (6–12) ──
+];
+
+export const TOTAL_QUESTIONS = QUESTIONS.length;
