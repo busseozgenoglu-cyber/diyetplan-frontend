@@ -3,34 +3,6 @@
 export const QUESTIONS = [
   // ── Kişisel Bilgiler (1–5) ──
   {
-    id: 1, category: "Kişisel Bilgiler", icon: "👤",
-    text: "Adınız ve soyadınız nedir?",
-    type: "text", placeholder: "Adınız Soyadınız",
-  },
-  {
-    id: 2, category: "Kişisel Bilgiler", icon: "🎂",
-    text: "Kaç yaşındasınız?",
-    type: "number", placeholder: "Yaşınızı girin", min: 10, max: 100, unit: "yaş",
-  },
-  {
-    id: 3, category: "Kişisel Bilgiler", icon: "👫",
-    text: "Cinsiyetiniz nedir?",
-    type: "single_choice",
-    options: ["Kadın", "Erkek", "Belirtmek istemiyorum"],
-  },
-  {
-    id: 4, category: "Kişisel Bilgiler", icon: "💼",
-    text: "Mesleğiniz nedir?",
-    type: "text", placeholder: "Mesleğinizi yazın",
-  },
-  {
-    id: 5, category: "Kişisel Bilgiler", icon: "📍",
-    text: "Yaşadığınız şehir nedir?",
-    type: "text", placeholder: "Şehrinizi yazın",
-  },
-
-  // ── Fiziksel Bilgiler (6–12) ──
-  {
     id: 6, category: "Fiziksel Bilgiler", icon: "📏",
     text: "Boyunuz kaç santimetre?",
     type: "number", placeholder: "Örn: 170", min: 100, max: 250, unit: "cm",
@@ -460,3 +432,31 @@ export const QUESTIONS = [
 ];
 
 export const TOTAL_QUESTIONS = QUESTIONS.length; // 60
+  {
+    id: 1, category: "Kişisel Bilgiler", icon: "👤",
+    text: "Adınız ve soyadınız nedir?",
+    type: "text", placeholder: "Adınız Soyadınız",
+  },
+  {
+    id: 2, category: "Kişisel Bilgiler", icon: "🎂",
+    text: "Kaç yaşındasınız?",
+    type: "number", placeholder: "Yaşınızı girin", min: 10, max: 100, unit: "yaş",
+  },
+  {
+    id: 3, category: "Kişisel Bilgiler", icon: "👫",
+    text: "Cinsiyetiniz nedir?",
+    type: "single_choice",
+    options: ["Kadın", "Erkek", "Belirtmek istemiyorum"],
+  },
+  {
+    id: 4, category: "Kişisel Bilgiler", icon: "💼",
+    text: "Mesleğiniz nedir?",
+    type: "text", placeholder: "Mesleğinizi yazın",
+  },
+  {
+    id: 5, category: "Kişisel Bilgiler", icon: "📍",
+    text: "Yaşadığınız şehir nedir?",
+    type: "text", placeholder: "Şehrinizi yazın",
+  },
+
+  // ── Fiziksel Bilgiler (6–12) ──
