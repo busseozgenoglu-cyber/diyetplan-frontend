@@ -6,6 +6,8 @@ import AnalysisScreen from "./pages/AnalysisScreen";
 import ContactForm from "./pages/ContactForm";
 import PaymentScreen from "./pages/PaymentScreen";
 import SuccessPage from "./pages/SuccessPage";
+import GizlilikPolitikasi from "./pages/GizlilikPolitikasi";
+import MesafeliSatis from "./pages/MesafeliSatis";
 import AdminLogin from "./pages/AdminLogin";
 import AdminPanel from "./pages/AdminPanel";
 
@@ -26,6 +28,8 @@ function App() {
         <Route path="/basari" element={<SuccessPage />} />
         <Route path="/admin/giris" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminRoute><AdminPanel /></AdminRoute>} />
+        <Route path="/gizlilik" element={<GizlilikPolitikasi />} />
+        <Route path="/mesafeli-satis" element={<MesafeliSatis />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

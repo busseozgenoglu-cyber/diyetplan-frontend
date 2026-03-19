@@ -99,6 +99,17 @@ export default function LandingPage() {
         </div>
       </div>
 
+
+      {/* Footer */}
+      <div className="px-5 pb-32 pt-6 text-center">
+        <div className="flex items-center justify-center gap-4 mb-2">
+          <a href="/gizlilik" className="text-xs text-gray-400 hover:text-gray-600 transition-colors">Gizlilik Politikası</a>
+          <span className="text-gray-200">|</span>
+          <a href="/mesafeli-satis" className="text-xs text-gray-400 hover:text-gray-600 transition-colors">Mesafeli Satış Sözleşmesi</a>
+        </div>
+        <p className="text-xs text-gray-300">© 2026 FitNova · Tüm hakları saklıdır</p>
+      </div>
+
       {/* Fixed CTA */}
       <div
         className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full px-6 pb-6 pt-3"
