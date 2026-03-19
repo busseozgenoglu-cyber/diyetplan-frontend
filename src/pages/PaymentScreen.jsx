@@ -119,7 +119,7 @@ export default function PaymentScreen() {
         submission_id: subId,
         user_ip: userIp,
       });
-      setPaytrData(res.data);
+      setPaytrData(res.data.iframe_token);
       setStep("paytr");
     } catch (err) {
       console.error("PayTR error:", err);
@@ -237,18 +237,20 @@ export default function PaymentScreen() {
           </div>
         )}
 
-        {/* ===== PAYTR FORM ===== */}
+        {/* ===== PAYTR IFRAME ===== */}
         {step === "paytr" && paytrData && (
-          <div className="px-5 py-8 text-center fade-in-up">
-            <p className="text-sm text-gray-500 mb-4">PayTR ödeme sayfasına yönlendiriliyorsunuz...</p>
-            <div className="flex gap-1.5 justify-center">
-              <span className="dot" /><span className="dot" /><span className="dot" />
+          <div className="px-5 pb-8 fade-in-up">
+            <div className="p-3 rounded-2xl mb-4" style={{ background: "#F0F7F2" }}>
+              <p className="text-xs text-gray-600 text-center">Güvenli ödeme sayfası — PayTR altyapısı</p>
             </div>
-            <form ref={formRef} action="https://www.paytr.com/odeme/api/get-token" method="POST" style={{ display: "none" }}>
-              {Object.entries(paytrData).map(([key, value]) => (
-                <input key={key} type="hidden" name={key} value={value} />
-              ))}
-            </form>
+            <iframe
+              src={`https://www.paytr.com/odeme/guvenli/${paytrData}`}
+              id="paytriframe"
+              frameBorder="0"
+              scrolling="no"
+              style={{ width: "100%", height: "600px", borderRadius: "16px" }}
+              title="PayTR Ödeme"
+            />
           </div>
         )}
 
