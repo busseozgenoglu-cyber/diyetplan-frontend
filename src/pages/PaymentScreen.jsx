@@ -23,8 +23,17 @@ export default function PaymentScreen() {
   const [copiedField, setCopiedField] = useState(null);
   const [havaleForm, setHavaleForm] = useState({ sender_name: "", sender_phone: "", note: "" });
   const [havaleLoading, setHavaleLoading] = useState(false);
-  const [paytrToken, setPaytrToken] = useState(null);
+  const [paytrData, setPaytrData] = useState(null);
   const [paytrLoading, setPaytrLoading] = useState(false);
+
+
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    if (step === "paytr" && paytrData && formRef.current) {
+      formRef.current.submit();
+    }
+  }, [step, paytrData]);
 
   const contact = (() => {
     try { return JSON.parse(sessionStorage.getItem("contact_info") || "{}"); } catch { return {}; }
@@ -110,7 +119,7 @@ export default function PaymentScreen() {
         submission_id: subId,
         user_ip: userIp,
       });
-      setPaytrToken(res.data.token);
+      setPaytrData(res.data);
       setStep("paytr");
     } catch (err) {
       console.error("PayTR error:", err);
@@ -228,31 +237,18 @@ export default function PaymentScreen() {
           </div>
         )}
 
-        {/* ===== PAYTR IFRAME ===== */}
-        {step === "paytr" && paytrToken && (
-          <div className="px-5 pb-8 fade-in-up">
-            <div className="p-3 rounded-2xl mb-4" style={{ background: "#F0F7F2" }}>
-              <p className="text-xs text-gray-600 text-center">Güvenli ödeme sayfası — PayTR altyapısı</p>
+        {/* ===== PAYTR FORM ===== */}
+        {step === "paytr" && paytrData && (
+          <div className="px-5 py-8 text-center fade-in-up">
+            <p className="text-sm text-gray-500 mb-4">PayTR ödeme sayfasına yönlendiriliyorsunuz...</p>
+            <div className="flex gap-1.5 justify-center">
+              <span className="dot" /><span className="dot" /><span className="dot" />
             </div>
-            <iframe
-              src={`https://www.paytr.com/odeme/guvenli/${paytrToken}`}
-              id="paytriframe"
-              frameBorder="0"
-              scrolling="no"
-              style={{ width: "100%", height: "600px", borderRadius: "16px" }}
-              title="PayTR Ödeme"
-            />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.addEventListener('message', function(e) {
-                    if(e.data === 'paytr-payment-success') {
-                      window.location.href = '/basari';
-                    }
-                  });
-                `
-              }}
-            />
+            <form ref={formRef} action="https://www.paytr.com/odeme/api/get-token" method="POST" style={{ display: "none" }}>
+              {Object.entries(paytrData).map(([key, value]) => (
+                <input key={key} type="hidden" name={key} value={value} />
+              ))}
+            </form>
           </div>
         )}
 
