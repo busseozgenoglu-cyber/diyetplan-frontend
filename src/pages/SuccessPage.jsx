@@ -12,6 +12,7 @@ export default function SuccessPage() {
   const email = sessionStorage.getItem("contact_email") || "";
 
   useEffect(() => {
+    if (window.fbq) { window.fbq("track", "Purchase", { currency: "TRY", value: 299 }); }
     setTimeout(() => setVisible(true), 100);
   }, []);
 
