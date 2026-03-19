@@ -28,7 +28,7 @@ const REVIEWS = [
   { name: "Seda Y.", city: "Antalya", text: "Hamileyken aldığım kiloları vermeye çalışıyordum. Plan hem sağlıklı hem etkili. Teşekkürler!", stars: 5, kg: "-4.5 kg", time: "1 ay" },
   { name: "Zeynep A.", city: "Konya", text: "Sabah kahvaltısından gece atıştırmasına kadar her şey yazılı. Çok rahat uyguladım.", stars: 5, kg: "-7 kg", time: "5 hafta" },
   { name: "Hülya M.", city: "Adana", text: "Diyabet hastasıyım, ona göre özel bir plan hazırladılar. Kan şekerim de düzeldi, kilom da.", stars: 5, kg: "-3 kg", time: "3 hafta" },
-  { name: "Cansu B.", city: "Trabzon", text: "3 günde geldi planım! Bu kadar hızlı olacağını beklemiyordum. İçerik de çok kapsamlı.", stars: 5, kg: "-5 kg", time: "4 hafta" },
+  { name: "Cansu B.", city: "Trabzon", text: "1 iş gününde geldi planım! Bu kadar hızlı olacağını beklemiyordum. İçerik de çok kapsamlı.", stars: 5, kg: "-5 kg", time: "4 hafta" },
 ];
 
 export default function LandingPage() {
@@ -99,7 +99,7 @@ export default function LandingPage() {
           {[
             { icon: TrendingDown, label: "Hızlı Kilo Verme", sub: "Bilimsel yöntem" },
             { icon: Heart, label: "Sağlıklı Beslenme", sub: "Dengeli plan" },
-            { icon: Zap, label: "3 Günde Teslim", sub: "E-posta ile" },
+            { icon: Zap, label: "1 İş Gününde Teslim", sub: "E-posta ile" },
             { icon: Award, label: "Kişiye Özel", sub: "100% bireysel" },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-3 p-3 rounded-2xl bg-white border border-gray-100 shadow-sm">
@@ -140,7 +140,7 @@ export default function LandingPage() {
             {[
               { step:"1", text:"5 dakikada formu doldur", sub:"Sağlık durumun ve hedeflerin" },
               { step:"2", text:"Ekibimiz planını hazırlasın", sub:"Kişiye özel 1 aylık program" },
-              { step:"3", text:"3 gün içinde e-postana gelsin", sub:"PDF olarak teslim" },
+              { step:"3", text:"1 iş günü içinde e-postana gelsin", sub:"PDF olarak teslim" },
             ].map((item,i)=>(
               <div key={i} className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-white text-sm font-bold" style={{ background: "#749F82" }}>{item.step}</div>
@@ -177,7 +177,7 @@ export default function LandingPage() {
           <div className="space-y-3">
             {[
               { q:"Plan gerçekten kişiye özel mi?", a:"Evet, doldurduğunuz form bilgilerine göre sizin için özel olarak hazırlanır." },
-              { q:"Ne kadar sürede teslim alırım?", a:"Ödemeniz onaylandıktan sonra 3 iş günü içinde e-posta adresinize PDF olarak gönderilir." },
+              { q:"Ne kadar sürede teslim alırım?", a:"Ödemeniz onaylandıktan sonra 1 iş günü içinde e-posta adresinize PDF olarak gönderilir." },
               { q:"Beğenmezsem ne olur?", a:"7 gün içinde para iadesi garantimiz var. Hiç sormadan iade yapıyoruz." },
               { q:"Diyabetim/tiroid sorunum varsa uygun mu?", a:"Formda sağlık durumunuzu belirtiyorsunuz, plana dahil ediyoruz." },
             ].map((item,i)=>(
@@ -210,7 +210,7 @@ export default function LandingPage() {
           <Leaf size={18} />
           Hemen Planımı Oluştur — 249 TL
         </button>
-        <p className="text-center text-xs text-gray-400 mt-2">Para iade garantisi · 3 günde teslim · Güvenli ödeme</p>
+        <p className="text-center text-xs text-gray-400 mt-2">Para iade garantisi · 1 iş gününde teslim · Güvenli ödeme</p>
       </div>
     </div>
   );
