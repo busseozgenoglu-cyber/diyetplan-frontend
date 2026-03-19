@@ -15,7 +15,7 @@ export default function MesafeliSatis() {
         <p className="text-xs text-gray-400">Son güncelleme: Mart 2026</p>
 
         <h2 className="font-bold text-gray-900">SATICI BİLGİLERİ</h2>
-        <p>Ad: Aleyna Özgenoğlu<br />E-posta: ozalentrade@gmail.com<br />Website: fitnova.ink</p>
+        <p>Ad: Aleyna Özgenoğlu<br />Adres: Esenlik Mah. 9124 Sokak, Ordu Cd. No:1 D:2, 35160 Karabağlar/İzmir<br />Telefon: 05434188581<br />E-posta: ozalentrade@gmail.com<br />Website: fitnova.ink</p>
 
         <h2 className="font-bold text-gray-900">MADDE 1 – KONU</h2>
         <p>İşbu sözleşme, alıcının satıcıya ait fitnova.ink web sitesi üzerinden elektronik ortamda sipariş verdiği kişiye özel diyet planı hizmetinin satışı ve teslimi ile ilgili olarak 6502 sayılı Tüketicinin Korunması Hakkında Kanun hükümleri gereğince tarafların hak ve yükümlülüklerini kapsar.</p>
