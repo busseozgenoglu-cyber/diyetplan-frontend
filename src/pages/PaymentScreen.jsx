@@ -247,7 +247,7 @@ export default function PaymentScreen() {
               src={`https://www.paytr.com/odeme/guvenli/${paytrData}`}
               id="paytriframe"
               frameBorder="0"
-              scrolling="no"
+              scrolling="yes"
               style={{ width: "100%", height: "800px", borderRadius: "16px" }}
               title="PayTR Ödeme"
             />
