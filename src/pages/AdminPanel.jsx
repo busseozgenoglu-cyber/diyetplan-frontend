@@ -84,7 +84,7 @@ function SubmissionModal({ sub, onClose, onRefresh }) {
             </button>
           </div>
           <div className="mt-2 flex items-center justify-between">
-            <StatusBadge status={sub.payment_status} />
+            <StatusBadge status={sub.status} />
             <span className="text-xs text-gray-400">{new Date(sub.created_at).toLocaleDateString("tr-TR")}</span>
           </div>
         </div>
@@ -127,7 +127,7 @@ function SubmissionModal({ sub, onClose, onRefresh }) {
                 )}
               </div>
 
-              {sub.payment_status === "havale_bekliyor" && (
+              {sub.status === "havale_bekliyor" && (
                 <div className="flex gap-2 mt-4">
                   <button
                     onClick={() => handleHavaleAction("approve")}
@@ -236,7 +236,7 @@ export default function AdminPanel() {
       s.full_name?.toLowerCase().includes(search.toLowerCase()) ||
       s.email?.toLowerCase().includes(search.toLowerCase()) ||
       s.phone?.includes(search);
-    const matchFilter = filter === "all" || s.payment_status === filter;
+    const matchFilter = filter === "all" || s.status === filter;
     return matchSearch && matchFilter;
   });
 
@@ -341,7 +341,7 @@ export default function AdminPanel() {
                       <p className="text-xs text-gray-400 mt-0.5">{sub.phone}</p>
                     </div>
                     <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
-                      <StatusBadge status={sub.payment_status} />
+                      <StatusBadge status={sub.status} />
                       <p className="text-xs text-gray-400">
                         {new Date(sub.created_at).toLocaleDateString("tr-TR")}
                       </p>
