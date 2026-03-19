@@ -248,7 +248,7 @@ export default function PaymentScreen() {
               id="paytriframe"
               frameBorder="0"
               scrolling="no"
-              style={{ width: "100%", height: "600px", borderRadius: "16px" }}
+              style={{ width: "100%", height: "800px", borderRadius: "16px" }}
               title="PayTR Ödeme"
             />
           </div>
